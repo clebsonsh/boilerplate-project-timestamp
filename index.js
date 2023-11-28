@@ -1,3 +1,4 @@
+require('dotenv').config()
 // index.js
 // where your node app starts
 
@@ -18,6 +19,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api/:date?", function (req, res) {
+  res.json({unix: +Date.now(), utc: new Date().toUTCString()});
+});
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
@@ -27,6 +31,6 @@ app.get("/api/hello", function (req, res) {
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+var listener = app.listen(process.env.PORT, process.env.HOST, function () {
+  console.log('Your app is listening on port ' + listener.address().host + ':' + listener.address().port);
 });
